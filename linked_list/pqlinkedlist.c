@@ -193,11 +193,11 @@ bool PqLinkedListClear(PqLinkedList *pq_linkedlist)
     return true;
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-bool PqLinkedListGetDataByIndex(PqLinkedList *pq_linkedlist, uint32_t index, PQLINKEDLISTTYPE *data)
+bool PqLinkedListGetDataByIndex(PqLinkedList *pq_linkedlist, uint32_t index, PQLINKEDLISTTYPE *data_return)
 {
     if (PqLinkedListIsEmpty(pq_linkedlist))
     {
-        data = NULL;
+        data_return = NULL;
         return false;
     }
 
@@ -207,15 +207,35 @@ bool PqLinkedListGetDataByIndex(PqLinkedList *pq_linkedlist, uint32_t index, PQL
     {
         if (counter == index)
         {
-            *data = current_node->data;
+            *data_return = current_node->data;
             return true;
         }
         current_node = (PqNode *)current_node->next_node;
         counter++;
     }
 }
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-size_t PqLinkedListGetSize(PqLinkedList *pq_linkedlist)
+void PqLinkedListTraverseWithCallback(PqLinkedList *pq_linkedlist, void (*callback_function)(PQLINKEDLISTTYPE *data_return))
+{
+    if (PqLinkedListIsEmpty(pq_linkedlist))
+    {
+        return;
+    }
+
+    PqNode *current_node = pq_linkedlist->head_node;
+    while (current_node != NULL)
+    {
+        if (callback_function)
+        {
+            callback_function(&current_node->data);
+        };
+        current_node = (PqNode *)current_node->next_node;
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+uint32_t PqLinkedListGetSize(PqLinkedList *pq_linkedlist)
 {
     if (PqLinkedListIsEmpty(pq_linkedlist))
     {

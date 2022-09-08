@@ -105,11 +105,22 @@ bool PqLinkedListClear(PqLinkedList *pq_linkedlist);
 bool PqLinkedListGetDataByIndex(PqLinkedList *pq_linkedlist, uint32_t index, PQLINKEDLISTTYPE* data_return);
 
 /**
+ * @brief Iterate of PqLinkedList elements and run callback function with item return each time
+ * 
+ * @param pq_linkedlist PqLinkedList struct
+ * @param index Position to read
+ * @param data_return Pointer to data for return if found
+ * @return true - success,
+ * @return false - fail
+ */
+void PqLinkedListTraverseWithCallback(PqLinkedList *pq_linkedlist, void(*callback_function)(PQLINKEDLISTTYPE* data_return));
+
+/**
  * @brief Gets current size of PqLinkedList
  * 
  * @param pq_linkedlist PqLinkedList struct
  * @return Size
  */
-size_t PqLinkedListGetSize(PqLinkedList *pq_linkedlist);
+uint32_t PqLinkedListGetSize(PqLinkedList *pq_linkedlist);
 
 #endif /* _PQLINKEDLIST_H_ */

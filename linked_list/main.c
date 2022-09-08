@@ -15,6 +15,16 @@ void display_list(PqLinkedList *list)
     }
 }
 
+void display_one_element(uint8_t* data)
+{
+printf("%d\n", *data);
+}
+
+void display_list_by_callback(PqLinkedList *list)
+{
+    PqLinkedListTraverseWithCallback(list, display_one_element);
+}
+ 
 int main(void)
 {
     PqLinkedList list;
@@ -29,4 +39,6 @@ int main(void)
     // PqLinkedListClear(&list);
 
     display_list(&list);
+    printf("\n\n");
+    display_list_by_callback(&list);
 }

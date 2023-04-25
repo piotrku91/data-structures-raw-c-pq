@@ -1,53 +1,53 @@
 #include "queue_manager.h"
 #include <stdio.h>
 
-void QueueManagerInit(QueueManager *pq_queue, uint32_t max_size)
+void QueueManagerInit(QueueManager *queue_manager, uint32_t max_size)
 {
-    pq_queue->max_size = max_size;
-    pq_queue->tail = pq_queue->max_size - 1;
+    queue_manager->max_size = max_size;
+    queue_manager->tail = queue_manager->max_size - 1;
 
-    pq_queue->current_size = 0;
-    pq_queue->head = 0;
+    queue_manager->current_size = 0;
+    queue_manager->head = 0;
 }
 
-bool QueueManagerEnqueue(QueueManager *pq_queue)
+bool QueueManagerEnqueue(QueueManager *queue_manager)
 {
-    if (QueueManagerIsFull(pq_queue))
+    if (QueueManagerIsFull(queue_manager))
     {
         return false;
     };
-    pq_queue->tail = QueueManagerGetNextIndex(pq_queue);
-    pq_queue->current_size++;
+    queue_manager->tail = QueueManagerGetNextIndex(queue_manager);
+    queue_manager->current_size++;
     return true;
 }
 
-bool QueueManagerDequeue(QueueManager *pq_queue)
+bool QueueManagerDequeue(QueueManager *queue_manager)
 {
-    if (QueueManagerIsEmpty(pq_queue))
+    if (QueueManagerIsEmpty(queue_manager))
     {
         return false;
     };
-    pq_queue->head = (pq_queue->head + 1) % pq_queue->max_size;
-    pq_queue->current_size--;
+    queue_manager->head = (queue_manager->head + 1) % queue_manager->max_size;
+    queue_manager->current_size--;
     return true;
 }
 
-uint32_t QueueManagerGetNextIndex(QueueManager *pq_queue)
+uint32_t QueueManagerGetNextIndex(QueueManager *queue_manager)
 {
-    return (pq_queue->tail + 1) % pq_queue->max_size;
+    return (queue_manager->tail + 1) % queue_manager->max_size;
 }
 
-uint32_t QueueManagerGetFrontIndex(QueueManager *pq_queue)
+uint32_t QueueManagerGetFrontIndex(QueueManager *queue_manager)
 {
-    return pq_queue->head;
+    return queue_manager->head;
 }
 
-bool QueueManagerIsFull(QueueManager *pq_queue)
+bool QueueManagerIsFull(QueueManager *queue_manager)
 {
-    return pq_queue->current_size == pq_queue->max_size;
+    return queue_manager->current_size == queue_manager->max_size;
 }
 
-bool QueueManagerIsEmpty(QueueManager *pq_queue)
+bool QueueManagerIsEmpty(QueueManager *queue_manager)
 {
-    return pq_queue->current_size == 0;
+    return queue_manager->current_size == 0;
 }
